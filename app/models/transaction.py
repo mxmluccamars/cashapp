@@ -1,5 +1,5 @@
 import uuid
-from sqlalchemy import Column, String, Boolean, DateTime, Numeric, Date, ForeignKey
+from sqlalchemy import Column, String, Boolean, DateTime, Numeric, Date, ForeignKey, Text
 from sqlalchemy.sql import func
 from sqlalchemy.orm import relationship
 from app.database.base import Base
@@ -13,6 +13,7 @@ class Transaction(Base):
     amount = Column(Numeric(12, 2), nullable=False)
     date = Column(Date, nullable=False)
     type = Column(String(10), nullable=False)  # EXPENSE ou INCOME
+    notes = Column(Text, nullable=True)
 
     # chaves estrangeiras
     category_id = Column(String(36), ForeignKey("categories.id", ondelete="RESTRICT"), nullable=False)
