@@ -16,6 +16,12 @@ from app.schemas.context import (
     ContextUpdate,
     ContextResponse,
 )
+from app.schemas.location import (
+    LocationBase,
+    LocationCreate,
+    LocationUpdate,
+    LocationResponse,
+)
 
 __all__ = [
     "CategoryBase",
@@ -30,4 +36,8 @@ __all__ = [
     "ContextCreate",
     "ContextUpdate",
     "ContextResponse",
+    "LocationBase",
+    "LocationCreate",
+    "LocationUpdate",
+    "LocationResponse",
 ]
