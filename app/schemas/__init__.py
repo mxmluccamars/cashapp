@@ -10,6 +10,12 @@ from app.schemas.transaction import (
     TransactionUpdate,
     TransactionResponse,
 )
+from app.schemas.context import (
+    ContextBase,
+    ContextCreate,
+    ContextUpdate,
+    ContextResponse,
+)
 
 __all__ = [
     "CategoryBase",
@@ -20,4 +26,8 @@ __all__ = [
     "TransactionCreate",
     "TransactionUpdate",
     "TransactionResponse",
+    "ContextBase",
+    "ContextCreate",
+    "ContextUpdate",
+    "ContextResponse",
 ]
