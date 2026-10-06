@@ -1,4 +1,5 @@
 from datetime import datetime
+from decimal import Decimal
 from typing import Optional
 from pydantic import BaseModel, ConfigDict, Field
 
@@ -9,6 +10,8 @@ class CategoryBase(BaseModel):
     type: str = Field(..., pattern="^(EXPENSE|INCOME)$", description="EXPENSE ou INCOME")
     icon: Optional[str] = Field("tag", max_length=30)
     color: Optional[str] = Field("#10B981", pattern="^#([A-Fa-f0-9]{6})$")
+    monthly_limit: Decimal = Field(..., gt=0)
+
 
 
 # Propriedades para criação (POST)
@@ -22,13 +25,17 @@ class CategoryUpdate(BaseModel):
     type: Optional[str] = Field(None, pattern="^(EXPENSE|INCOME)$")
     icon: Optional[str] = Field(None, max_length=30)
     color: Optional[str] = Field(None, pattern="^#([A-Fa-f0-9]{6})$")
-    is_active: Optional[bool] = None
+    monthly_limit: Optional[Decimal] = Field(None, gt=0)
 
 
 # O que a API devolve nas respostas (GET, POST, PATCH)
 class CategoryResponse(CategoryBase):
     id: str
-    is_active: bool
+    name: str
+    type: str
+    icon: str
+    color: str
+    monthly_limit: float
     created_at: datetime
     updated_at: datetime
 
