@@ -34,6 +34,12 @@ from app.schemas.payment_method import (
     PaymentMethodUpdate,
     PaymentMethodResponse,
 )
+from app.schemas.recurring_bill import (
+    RecurringBillBase,
+    RecurringBillCreate,
+    RecurringBillUpdate,
+    RecurringBillResponse,
+)
 
 __all__ = [
     "CategoryBase",
@@ -60,4 +66,8 @@ __all__ = [
     "PaymentMethodCreate",
     "PaymentMethodUpdate", 
     "PaymentMethodResponse",
+    "RecurringBillBase",
+    "RecurringBillCreate",
+    "RecurringBillUpdate",
+    "RecurringBillResponse",
 ]
