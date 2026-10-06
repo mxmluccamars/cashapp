@@ -11,7 +11,7 @@ class Goal(Base):
     name = Column(String(50), nullable=False, unique=True, index=True)
     description = Column(String(100), nullable=False)
     target_amount = Column(Numeric(12, 2), nullable=False)
-    target_date = Column(DateTime, nullable=False)
+    target_date = Column(DateTime, nullable=True)
     icon = Column(String(30), nullable=True, default="tag")
     color = Column(String(7), nullable=False, default="#FFEE00")
 

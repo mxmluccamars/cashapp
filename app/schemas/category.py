@@ -10,7 +10,7 @@ class CategoryBase(BaseModel):
     type: str = Field(..., pattern="^(EXPENSE|INCOME)$", description="EXPENSE ou INCOME")
     icon: Optional[str] = Field("tag", max_length=30)
     color: Optional[str] = Field("#10B981", pattern="^#([A-Fa-f0-9]{6})$")
-    monthly_limit: Decimal = Field(..., gt=0)
+    monthly_limit: Optional[Decimal] = Field(None, gt=0)
 
 
 
@@ -31,11 +31,6 @@ class CategoryUpdate(BaseModel):
 # O que a API devolve nas respostas (GET, POST, PATCH)
 class CategoryResponse(CategoryBase):
     id: str
-    name: str
-    type: str
-    icon: str
-    color: str
-    monthly_limit: float
     created_at: datetime
     updated_at: datetime
 

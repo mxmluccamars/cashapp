@@ -16,6 +16,12 @@ class BaseRepository(Generic[ModelType]):
         return db.query(self.model).offset(skip).limit(limit).all()
 
     def create(self, db: Session, obj_in_data: dict) -> ModelType:
+        if hasattr(obj_in_data, "model_'dump"):
+            obj_in_data = obj_in_data.model_dump()
+        elif isinstance(obj_in_data, dict):
+            obj_in_data = obj_in_data
+        else:
+            obj_in_data = dict(obj_in_data)
         db_obj = self.model(**obj_in_data)
         db.add(db_obj)
         db.commit()

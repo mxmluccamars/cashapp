@@ -7,7 +7,7 @@ class GoalBase(BaseModel):
     name: str = Field(..., min_length=2, max_length=50, description="Nome do objetivo")
     description: str = Field(..., min_length=2, max_length=100, description="Descrição do objetivo")
     target_amount: Decimal = Field(..., gt=0, description="Valor alvo do objetivo")
-    target_date: datetime = Field(..., description="Data alvo do objetivo")
+    target_date: Optional[datetime] = Field(None, description="Data alvo do objetivo")
     icon: Optional[str] = Field("tag", max_length=30)
     color: Optional[str] = Field("#FFEE00", pattern="^#([A-Fa-f0-9]{6})$")
 
@@ -26,12 +26,6 @@ class GoalUpdate(BaseModel):
 
 class GoalResponse(GoalBase):
     id: str
-    name: str
-    description: str
-    target_amount: float
-    target_date: datetime
-    icon: str
-    color: str
     created_at: datetime
     updated_at: datetime
 
