@@ -28,9 +28,9 @@ from app.schemas.recurring_bill import RecurringBillCreate
 
 def seed_payment_methods(db: Session):
     methods = [
-        {"name": "Pix", "icon": "zap", "color": "#10B981"},
-        {"name": "Dinheiro", "icon": "banknote", "color": "#F59E0B"},
-        {"name": "Cartão de Crédito", "icon": "credit-card", "color": "#8A05BE"},
+        {"name": "Pix", "icon": "zap", "color": "#10B981", "allow_installments": False},
+        {"name": "Dinheiro", "icon": "banknote", "color": "#F59E0B", "allow_installments": False},
+        {"name": "Cartão de Crédito", "icon": "credit-card", "color": "#8A05BE", "allow_installments": True},
     ]
     created = {}
     for data in methods:

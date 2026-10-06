@@ -11,6 +11,7 @@ class PaymentMethod(Base):
     name = Column(String(50), nullable=False, unique=True, index=True)
     icon = Column(String(30), nullable=True, default="tag")
     color = Column(String(7), nullable=False, default="#10B981")
+    allow_installments = Column(Boolean, nullable=False, default=False)
 
     created_at = Column(DateTime(timezone=True), server_default=func.now(), nullable=False)
     updated_at = Column(DateTime(timezone=True), server_default=func.now(), onupdate=func.now(), nullable=False)
