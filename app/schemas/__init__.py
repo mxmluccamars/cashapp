@@ -22,6 +22,12 @@ from app.schemas.location import (
     LocationUpdate,
     LocationResponse,
 )
+from app.schemas.goal import (
+    GoalBase,
+    GoalCreate,
+    GoalUpdate,
+    GoalResponse,
+)
 
 __all__ = [
     "CategoryBase",
@@ -40,4 +46,8 @@ __all__ = [
     "LocationCreate",
     "LocationUpdate",
     "LocationResponse",
+    "GoalBase",
+    "GoalCreate",
+    "GoalUpdate",
+    "GoalResponse",
 ]
