@@ -3,11 +3,14 @@ from app.repositories.category import category_repository
 from app.repositories.transaction import transaction_repository
 from app.repositories.context import context_repository
 from app.repositories.location import location_repository
-from app.repositories.goal import GoalRepository
+from app.repositories.goal import goal_repository
+from app.repositories.payment_method import payment_method_repository
 
 __all__ = ["BaseRepository", 
            "category_repository", 
            "transaction_repository",
            "context_repository",
            "location_repository",
-           "GoalRepository"]
+           "goal_repository",
+           "payment_method_repository"
+           ]

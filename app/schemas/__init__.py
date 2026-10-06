@@ -28,6 +28,12 @@ from app.schemas.goal import (
     GoalUpdate,
     GoalResponse,
 )
+from app.schemas.payment_method import (
+    PaymentMethodBase,
+    PaymentMethodCreate,
+    PaymentMethodUpdate,
+    PaymentMethodResponse,
+)
 
 __all__ = [
     "CategoryBase",
@@ -50,4 +56,8 @@ __all__ = [
     "GoalCreate",
     "GoalUpdate",
     "GoalResponse",
+    "PaymentMethodBase",
+    "PaymentMethodCreate",
+    "PaymentMethodUpdate", 
+    "PaymentMethodResponse",
 ]

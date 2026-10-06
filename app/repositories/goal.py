@@ -10,3 +10,5 @@ class GoalRepository(BaseRepository[Goal]):
 
     def get_by_name(self, db: Session, name: str) -> Optional[Goal]:
         return db.query(self.model).filter(self.model.name == name).first()
+
+goal_repository = GoalRepository()
