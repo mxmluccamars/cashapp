@@ -133,7 +133,7 @@ class TransactionService:
         return [created_obj]
 
     def get_by_id(self, db: Session, transaction_id: str) -> Transaction:
-        transaction = self.repository.get(db, id=transaction_id)
+        transaction = self.repository.get_by_id(db, id=transaction_id)
         if not transaction:
             raise HTTPException(
                 status_code=status.HTTP_404_NOT_FOUND,
@@ -142,7 +142,7 @@ class TransactionService:
         return transaction
 
     def list_all(self, db: Session, skip: int = 0, limit: int = 100) -> List[Transaction]:
-        return self.repository.get_multi(db, skip=skip, limit=limit)
+        return self.repository.get_all(db, skip=skip, limit=limit)
 
     def update(self, db: Session, transaction_id: str, schema: TransactionUpdate) -> Transaction:
         transaction = self.get_by_id(db, transaction_id)
@@ -159,11 +159,11 @@ class TransactionService:
             recurring_bill_id=update_data.get("recurring_bill_id"),
         )
 
-        return self.repository.update(db, db_obj=transaction, obj_in=update_data)
+        return self.repository.update(db, db_obj=transaction, updates=update_data)
 
     def delete(self, db: Session, transaction_id: str) -> None:
-        self.get_by_id(db, transaction_id)
-        self.repository.remove(db, id=transaction_id)
+        transaction = self.get_by_id(db, transaction_id)
+        self.repository.remove(db, db_obj=transaction)
 
 
 transaction_service = TransactionService(transaction_repository)
