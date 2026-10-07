@@ -1,5 +1,5 @@
-from typing import List
-from fastapi import APIRouter, Depends, status
+from typing import List, Optional
+from fastapi import APIRouter, Depends, Query, status
 from sqlalchemy.orm import Session
 
 from app.database.session import get_db
@@ -15,70 +15,80 @@ router = APIRouter()
 
 @router.post(
     "/",
-    response_model=TransactionResponse,
+    response_model=List[TransactionResponse],
     status_code=status.HTTP_201_CREATED,
-    summary="Criar transação",
-    description="Registra uma nova receita ou despesa associada a uma categoria existente."
+    summary="Criar transação (à vista ou parcelada)"
 )
 def create_transaction(
-    tx_in: TransactionCreate,
+    schema: TransactionCreate,
     db: Session = Depends(get_db)
 ):
-    # Repassa diretamente os dados validados para o Service
-    return transaction_service.create(db, tx_in)
+    """
+    Cadastra uma transação financeira.
+    - Se `installments == 1` (ou não informado): cria um lançamento à vista.
+    - Se `installments > 1`: divide o valor nas faturas mensais subsequentes e retorna todas as parcelas geradas.
+    """
+    return transaction_service.create(db, schema=schema)
 
 
 @router.get(
     "/",
     response_model=List[TransactionResponse],
-    summary="Listar transações",
-    description="Retorna todas as transações cadastradas com paginação."
+    summary="Listar transações"
 )
 def list_transactions(
-    skip: int = 0,
-    limit: int = 100,
+    skip: int = Query(0, ge=0, description="Registros para pular (paginação)"),
+    limit: int = Query(100, ge=1, le=500, description="Limite máximo de registros"),
     db: Session = Depends(get_db)
 ):
+    """
+    Lista o extrato de transações cadastradas no sistema.
+    """
     return transaction_service.list_all(db, skip=skip, limit=limit)
 
 
 @router.get(
-    "/{tx_id}",
+    "/{transaction_id}",
     response_model=TransactionResponse,
-    summary="Buscar transação por ID",
-    description="Obtém os detalhes completos de uma transação específica pelo seu identificador."
+    summary="Buscar transação por ID"
 )
 def get_transaction(
-    tx_id: str,
+    transaction_id: str,
     db: Session = Depends(get_db)
 ):
-    return transaction_service.get_by_id(db, tx_id)
+    """
+    Obtém os detalhes completos de uma transação específica, incluindo as entidades aninhadas.
+    """
+    return transaction_service.get_by_id(db, transaction_id=transaction_id)
 
 
 @router.patch(
-    "/{tx_id}",
+    "/{transaction_id}",
     response_model=TransactionResponse,
-    summary="Atualizar transação",
-    description="Atualiza parcialmente os dados de uma transação existente."
+    summary="Atualizar transação parcialmente"
 )
 def update_transaction(
-    tx_id: str,
-    tx_in: TransactionUpdate,
+    transaction_id: str,
+    schema: TransactionUpdate,
     db: Session = Depends(get_db)
 ):
-    return transaction_service.update(db, tx_id, tx_in)
+    """
+    Atualiza apenas os campos enviados no corpo da requisição (ex.: alterar categoria ou valor).
+    """
+    return transaction_service.update(db, transaction_id=transaction_id, schema=schema)
 
 
 @router.delete(
-    "/{tx_id}",
+    "/{transaction_id}",
     status_code=status.HTTP_204_NO_CONTENT,
-    summary="Excluir transação",
-    description="Remove definitivamente uma transação do banco de dados."
+    summary="Remover transação"
 )
 def delete_transaction(
-    tx_id: str,
+    transaction_id: str,
     db: Session = Depends(get_db)
 ):
-    transaction_service.delete(db, tx_id)
-    # No status 204 (No Content), não se retorna corpo na resposta
+    """
+    Exclui um lançamento do banco de dados pelo seu ID.
+    """
+    transaction_service.delete(db, transaction_id=transaction_id)
     return None
