@@ -1,3 +1,11 @@
+"""
+Módulo de Schemas (DTOs) para Contas Recorrentes (Recurring Bills).
+
+Define os contratos de validação de dados de entrada e serialização de saída (Pydantic).
+Separa claramente o que é exigido no cadastro (POST), na atualização parcial (PATCH)
+e o que é formatado e devolvido para a internet (GET).
+"""
+
 from decimal import Decimal
 from datetime import datetime
 from typing import Optional

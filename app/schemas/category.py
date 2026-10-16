@@ -1,3 +1,11 @@
+"""
+Módulo de Schemas (DTOs) para Categorias.
+
+Define os contratos de validação de dados de entrada e serialização de saída (Pydantic).
+Separa claramente o que é exigido no cadastro (POST), na atualização parcial (PATCH)
+e o que é formatado e devolvido para a internet (GET).
+"""
+
 from datetime import datetime
 from decimal import Decimal
 from typing import Optional
@@ -8,9 +16,9 @@ from pydantic import BaseModel, ConfigDict, Field
 class CategoryBase(BaseModel):
     name: str = Field(..., min_length=2, max_length=50, description="Nome da categoria")
     type: str = Field(..., pattern="^(EXPENSE|INCOME)$", description="EXPENSE ou INCOME")
-    icon: Optional[str] = Field("tag", max_length=30)
-    color: Optional[str] = Field("#10B981", pattern="^#([A-Fa-f0-9]{6})$")
-    monthly_limit: Optional[Decimal] = Field(None, gt=0)
+    icon: Optional[str] = Field("tag", max_length=30, description="Nome da imagem do icone")
+    color: Optional[str] = Field("#10B981", pattern="^#([A-Fa-f0-9]{6})$", description="Cor do icone")
+    monthly_limit: Optional[Decimal] = Field(None, gt=0, description="Limite mensal da categoria")
 
 
 
